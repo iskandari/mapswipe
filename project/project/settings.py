@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default=config('DB_DRIVER' + "://" + "DB_USER" + '@' + 'DB_PASSWORD'))
+    'default': dj_database_url.config(default=config('DB_DRIVER' + "://" + "DB_USER" + '@' + 'DB_PASSWORD' + '/' + 'DB_NAME'))
 }
 
 # Password validation
