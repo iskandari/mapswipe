@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+
 with open('project/db_password.txt') as f:
     DB_PASSWORD=f.read().strip()
 
