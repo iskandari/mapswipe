@@ -16,15 +16,19 @@ import dj_database_url
 import json
 import os
 
-with open('project/secrets.json') as f:
-    secrets=json.load(f)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS')
-DB_PASSWORD=secrets['DB_PASSWORD']
+
+ALLOWED_HOSTS = ['localhost']
+GDAL_LIBRARY_PATH = '/opt/homebrew/opt/gdal/lib/libgdal.dylib'
+GEOS_LIBRARY_PATH = '/opt/homebrew/opt/geos/lib/libgeos_c.dylib'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+with open(str(BASE_DIR) + '/secrets.json') as f:
+    secrets=json.load(f)
+DB_PASSWORD=secrets['DB_PASSWORD']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -45,7 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework_gis'
+    'rest_framework_gis',
+    'mapswipe'
 ]
 
 MIDDLEWARE = [
@@ -83,7 +88,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default=config('DB_DRIVER' + "://" + "DB_USER" + ':' + 'DB_PASSWORD' + '@' + 'DB_HOST'+ '/' + 'DB_NAME'))
+    'default': dj_database_url.config(default=config('DB_DRIVER') + "://" + config("DB_USER") + ':' + DB_PASSWORD + '@' + config('DB_HOST')+ '/' + config('DB_NAME'))
 }
 
 # Password validation
